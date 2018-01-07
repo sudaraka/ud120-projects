@@ -17,26 +17,53 @@ bumpy_slow = [features_train[ii][1] for ii in range(0, len(features_train)) if l
 
 
 #### initial visualization
-plt.xlim(0.0, 1.0)
-plt.ylim(0.0, 1.0)
-plt.scatter(bumpy_fast, grade_fast, color = "b", label="fast")
-plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
-plt.legend()
-plt.xlabel("bumpiness")
-plt.ylabel("grade")
-plt.show()
+#  plt.xlim(0.0, 1.0)
+#  plt.ylim(0.0, 1.0)
+#  plt.scatter(bumpy_fast, grade_fast, color = "b", label="fast")
+#  plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
+#  plt.legend()
+#  plt.xlabel("bumpiness")
+#  plt.ylabel("grade")
+#  plt.show()
 ################################################################################
 
 
-### your code here!  name your classifier object clf if you want the 
+### your code here!  name your classifier object clf if you want the
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.metrics import accuracy_score
+
+# k-nearest neighbors
+from sklearn.neighbors import KNeighborsClassifier
+
+clf_knn = KNeighborsClassifier(n_neighbors=1)
+clf_knn.fit(features_train, labels_train)
+pred = clf_knn.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "Accuracy (k-NN):", acc
 
 
+# AdaBoost
+from sklearn.ensemble import AdaBoostClassifier
+
+clf_ab = AdaBoostClassifier()
+clf_ab.fit(features_train, labels_train)
+pred = clf_ab.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "Accuracy (AdaBoost):", acc
 
 
+# Random Forest
+from sklearn.ensemble import RandomForestClassifier
+
+clf_rf = RandomForestClassifier()
+clf_rf.fit(features_train, labels_train)
+pred = clf_rf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "Accuracy (RF):", acc
 
 
+clf = clf_rf
 
 try:
     prettyPicture(clf, features_test, labels_test)
